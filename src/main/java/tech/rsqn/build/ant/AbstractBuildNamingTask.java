@@ -148,14 +148,6 @@ public abstract class AbstractBuildNamingTask extends Task {
         bn.setHost(Utils.getLocalHostName());
     }
 
-    /**
-     * There is a risk with this that someone could commit something during the build and it would get tagged.
-     * I accept that risk for now, its unlikely and will be able to be detected via SCM manually
-     *
-     * @param nb
-     * @param tryWithAuthProperties
-     * @throws SVNException
-     */
     protected abstract void createTag(NamedBuildNumber nb, boolean tryWithAuthProperties);
 
     protected abstract void commitBuildNumber(NamedBuildNumber nb, boolean tryWithAuthProperties);
