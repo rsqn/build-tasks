@@ -1,4 +1,4 @@
-package tech.rsqn.build.ant;
+package tech.rsqn.build.naming.ant;
 
 import java.io.IOException;
 import java.io.StringReader;

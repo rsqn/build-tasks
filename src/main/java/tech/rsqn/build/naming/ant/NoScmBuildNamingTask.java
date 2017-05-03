@@ -1,4 +1,4 @@
-package tech.rsqn.build.ant;
+package tech.rsqn.build.naming.ant;
 
 
 public class NoScmBuildNamingTask extends AbstractBuildNamingTask {

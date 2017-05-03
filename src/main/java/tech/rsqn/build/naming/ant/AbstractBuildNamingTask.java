@@ -1,4 +1,4 @@
-package tech.rsqn.build.ant;
+package tech.rsqn.build.naming.ant;
 
 
 import com.google.common.collect.Lists;

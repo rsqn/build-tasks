@@ -1,10 +1,10 @@
 package tech.rsqn.build.ant.anttasks;
 
 import com.google.common.collect.Lists;
-import tech.rsqn.build.ant.AbstractBuildNamingTask;
-import tech.rsqn.build.ant.CommandLineInterface;
+import org.testng.annotations.Test;
+import tech.rsqn.build.naming.ant.AbstractBuildNamingTask;
+import tech.rsqn.build.naming.ant.CommandLineInterface;
 import org.apache.maven.cli.MavenCli;
-import org.junit.Test;
 
 import java.io.File;
 
@@ -21,7 +21,6 @@ public class MavenCliTest {
         } catch ( Exception ex) {
             throw ex;
         }
-
     }
 
 

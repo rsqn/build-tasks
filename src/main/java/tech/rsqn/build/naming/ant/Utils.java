@@ -1,4 +1,4 @@
-package tech.rsqn.build.ant;
+package tech.rsqn.build.naming.ant;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;

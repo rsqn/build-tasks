@@ -1,11 +1,11 @@
 package tech.rsqn.build.ant.anttasks.build;
 
-import tech.rsqn.build.ant.NamedBuildNumber;
-import org.junit.Test;
+import org.testng.annotations.Test;
+import tech.rsqn.build.naming.ant.NamedBuildNumber;
 
 public class NamedBuilderNumberTest {
 
-    @org.junit.Test
+    @Test
     public void testName() throws Exception {
         NamedBuildNumber n = new NamedBuildNumber();
         n.setMajor("1");
