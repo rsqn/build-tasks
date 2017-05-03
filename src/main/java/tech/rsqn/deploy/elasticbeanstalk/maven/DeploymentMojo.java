@@ -93,7 +93,7 @@ public class DeploymentMojo extends AbstractMojo {
 
             System.out.println("Connecting to Elastic beanstalk");
             AWSElasticBeanstalk elasticBeanstalk = new AWSElasticBeanstalkClient(credentials);
-            elasticBeanstalk.setRegion(Region.getRegion(Regions.valueOf(region)));
+            elasticBeanstalk.setRegion(Region.getRegion(Regions.fromName(region)));
 //            elasticBeanstalk.setEndpoint(elasticBeanstalkEndPoint);
 
             List<EnvironmentDescription> environments = elasticBeanstalk.describeEnvironments().getEnvironments();
