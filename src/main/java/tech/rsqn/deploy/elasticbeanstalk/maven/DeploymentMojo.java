@@ -29,7 +29,7 @@ import java.util.List;
 
 public class DeploymentMojo extends AbstractMojo {
     @Parameter
-    private String warFile;
+    private String artifactFile;
     @Parameter
     private String versionLabel;
     @Parameter
@@ -51,10 +51,10 @@ public class DeploymentMojo extends AbstractMojo {
 //    private String elasticBeanstalkEndPoint;
 
     public void execute() throws MojoExecutionException {
-        System.out.println("DeploymentTask Executing - warFile " + warFile);
+        System.out.println("DeploymentTask Executing - artifactFile " + artifactFile);
 
         try {
-            File warFileHandle = new File(warFile);
+            File fileHandle = new File(artifactFile);
             versionLabel += "-ts-" + System.currentTimeMillis();
             String key = applicationName + "-" + versionLabel;
 
@@ -115,7 +115,7 @@ public class DeploymentMojo extends AbstractMojo {
 
             System.out.println("Uploading application to Amazon S3");
             
-            PutObjectResult s3Result = s3.putObject(bucketName, key, warFileHandle);
+            PutObjectResult s3Result = s3.putObject(bucketName, key, fileHandle);
 
             System.out.println("Uploaded application " + s3Result.getETag());
 
