@@ -1,6 +1,6 @@
 package tech.rsqn.deploy.elasticbeanstalk.maven;
 
-import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.*;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.elasticbeanstalk.AWSElasticBeanstalk;
@@ -8,6 +8,7 @@ import com.amazonaws.services.elasticbeanstalk.AWSElasticBeanstalkClient;
 import com.amazonaws.services.elasticbeanstalk.model.*;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import org.apache.maven.plugin.AbstractMojo;
@@ -42,13 +43,8 @@ public class DeploymentMojo extends AbstractMojo {
     private String accessKey;
     @Parameter
     private String secretKey;
-//    @Parameter
-//    private String s3Endpoint;
     @Parameter
     private String region;
-
-//    @Parameter
-//    private String elasticBeanstalkEndPoint;
 
     public void execute() throws MojoExecutionException {
         System.out.println("DeploymentTask Executing - artifactFile " + artifactFile);
@@ -58,20 +54,18 @@ public class DeploymentMojo extends AbstractMojo {
             versionLabel += "-ts-" + System.currentTimeMillis();
             String key = applicationName + "-" + versionLabel;
 
-//            final String accessKeyFinal = accessKey;
-//            final String secretKeyFinal = secretKey;
-//
-            AWSCredentials credentials = new AWSCredentials() {
-                public String getAWSAccessKeyId() {
-                    return accessKey;
-                }
-
-                public String getAWSSecretKey() {
-                    return secretKey;
-                }
-            };
             System.out.println("Connecting to S3");
-            AmazonS3 s3 = new AmazonS3Client(credentials);
+
+            AWSCredentialsProvider credentials = null;
+
+            if ( accessKey != null && accessKey.trim().length() > 0 ) {
+                System.out.println("Using provided accessKey and secretKey parameters");
+                credentials = new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey));
+            } else {
+                credentials = new DefaultAWSCredentialsProviderChain();
+            }
+
+            AmazonS3 s3 = AmazonS3ClientBuilder.standard().withCredentials(credentials).build();
 
             System.out.println("There are " + s3.listBuckets().size() + " s3 buckets");
 
@@ -94,7 +88,6 @@ public class DeploymentMojo extends AbstractMojo {
             System.out.println("Connecting to Elastic beanstalk");
             AWSElasticBeanstalk elasticBeanstalk = new AWSElasticBeanstalkClient(credentials);
             elasticBeanstalk.setRegion(Region.getRegion(Regions.fromName(region)));
-//            elasticBeanstalk.setEndpoint(elasticBeanstalkEndPoint);
 
             List<EnvironmentDescription> environments = elasticBeanstalk.describeEnvironments().getEnvironments();
             System.out.println("There are " + environments.size() + " environments ");
