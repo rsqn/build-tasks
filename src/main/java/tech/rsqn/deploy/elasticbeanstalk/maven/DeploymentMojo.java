@@ -1,13 +1,15 @@
 package tech.rsqn.deploy.elasticbeanstalk.maven;
 
-import com.amazonaws.auth.*;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.elasticbeanstalk.AWSElasticBeanstalk;
 import com.amazonaws.services.elasticbeanstalk.AWSElasticBeanstalkClient;
 import com.amazonaws.services.elasticbeanstalk.model.*;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.PutObjectResult;
@@ -62,6 +64,7 @@ public class DeploymentMojo extends AbstractMojo {
                 System.out.println("Using provided accessKey and secretKey parameters");
                 credentials = new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey));
             } else {
+                System.out.println("Using DefaultAWSCredentialsProviderChain");
                 credentials = new DefaultAWSCredentialsProviderChain();
             }
 
